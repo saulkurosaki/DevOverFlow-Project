@@ -1,16 +1,5 @@
 import { BADGE_CRITERIA } from "@/constants";
 
-export interface TopQuestions {
-  route: string;
-  label: string;
-}
-
-export interface PopularTags {
-  route: string;
-  tag: string;
-  tagNum: number;
-}
-
 export interface SidebarLink {
   imgURL: string;
   route: string;
