@@ -1,3 +1,4 @@
+import QuestionCard from "@/components/cards/QuestionCard";
 import HomeFilters from "@/components/home/HomeFilters";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
@@ -7,32 +8,32 @@ import { HomePageFilters } from "@/constants/filters";
 import Link from "next/link";
 
 const questions = [
-  // {
-  //   _id: 1,
-  //   title: "Cascading Deletes in SQLAlchemy?",
-  //   tags: [
-  //     { _id: 1, name: "python" },
-  //     { _id: 2, name: "sql" },
-  //   ],
-  //   author: "John Doe",
-  //   upvotes: 10,
-  //   views: 100,
-  //   answers: 2,
-  //   createdAt: "2023-11-23T12:00:00.000Z",
-  // },
-  // {
-  //   _id: 2,
-  //   title: "How do I use Express as a custom server in NextJS",
-  //   tags: [
-  //     { _id: 1, name: "next13" },
-  //     { _id: 2, name: "express" },
-  //   ],
-  //   author: "John Doe",
-  //   upvotes: 10,
-  //   views: 100,
-  //   answers: 2,
-  //   createdAt: "2023-11-23T12:00:00.000Z",
-  // },
+  {
+    _id: 1,
+    title: "Cascading Deletes in SQLAlchemy?",
+    tags: [
+      { _id: 1, name: "python" },
+      { _id: 2, name: "sql" },
+    ],
+    author: { _id: 101, name: "John Doe", picture: "john-doe.jpg" },
+    upvotes: 1500000,
+    views: 100,
+    answers: [{}, {}], // Array of objects as specified in the interface
+    createdAt: new Date("2023-11-20T12:00:00.000Z"),
+  },
+  {
+    _id: 2,
+    title: "How do I use Express as a custom server in NextJS",
+    tags: [
+      { _id: 1, name: "next13" },
+      { _id: 2, name: "express" },
+    ],
+    author: { _id: 102, name: "John Doe", picture: "john-doe.jpg" },
+    upvotes: 512400,
+    views: 100,
+    answers: [{}, {}], // Array of objects as specified in the interface
+    createdAt: new Date("2022-11-23T12:00:00.000Z"),
+  },
 ];
 
 export default function Home() {
@@ -67,7 +68,19 @@ export default function Home() {
 
       <div className="mt-10 flex w-full flex-col gap-6">
         {questions.length > 0 ? (
-          questions.map((question) => "QuestionCard")
+          questions.map((question) => (
+            <QuestionCard
+              key={question._id}
+              _id={question._id}
+              title={question.title}
+              tags={question.tags}
+              author={question.author}
+              upvotes={question.upvotes}
+              views={question.views}
+              answers={question.answers}
+              createdAt={question.createdAt}
+            />
+          ))
         ) : (
           <NoResult
             title="There's no question to show"
