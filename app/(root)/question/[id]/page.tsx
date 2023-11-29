@@ -44,7 +44,7 @@ const QuestionDetails = async ({ params }: { params: { id: string } }) => {
 
           <div className="flex justify-end">
             <Votes
-              type="question"
+              type="Question"
               itemId={JSON.stringify(question._id)}
               userId={JSON.stringify(mongoUser._id)}
               upvotes={question.upvotes.length}
