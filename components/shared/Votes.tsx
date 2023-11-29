@@ -1,6 +1,7 @@
 "use client";
 
 import { downvoteAnswer, upvoteAnswer } from "@/lib/actions/answer.action";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 import {
   downvoteQuestion,
   upvoteQuestion,
@@ -9,9 +10,9 @@ import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import { useEffect } from "react";
 
-interface Params {
+interface Props {
   type: string;
   itemId: string;
   userId: string;
@@ -31,9 +32,9 @@ const Votes = ({
   downvotes,
   hasdownVoted,
   hasSaved,
-}: Params) => {
+}: Props) => {
   const pathname = usePathname();
-  //   const router = useRouter();
+  const router = useRouter();
 
   const handleSave = async () => {
     await toggleSaveQuestion({
@@ -44,7 +45,9 @@ const Votes = ({
   };
 
   const handleVote = async (action: string) => {
-    if (!userId) return;
+    if (!userId) {
+      return;
+    }
 
     if (action === "upvote") {
       if (type === "Question") {
@@ -65,7 +68,7 @@ const Votes = ({
         });
       }
 
-      // TODO: Show a Toast
+      // todo: show a toast
       return;
     }
 
@@ -88,23 +91,30 @@ const Votes = ({
         });
       }
 
-      // TODO: Show a Toast
+      // todo: show a toast
     }
   };
+
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [itemId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">
       <div className="flex-center gap-2.5">
-        <div className="flex-center gap-2.5">
+        <div className="flex-center gap-1.5">
           <Image
             src={
               hasupVoted
                 ? "/assets/icons/upvoted.svg"
                 : "/assets/icons/upvote.svg"
             }
-            alt="upvote"
             width={18}
             height={18}
+            alt="upvote"
             className="cursor-pointer"
             onClick={() => handleVote("upvote")}
           />
@@ -116,16 +126,16 @@ const Votes = ({
           </div>
         </div>
 
-        <div className="flex-center gap-2.5">
+        <div className="flex-center gap-1.5">
           <Image
             src={
               hasdownVoted
                 ? "/assets/icons/downvoted.svg"
                 : "/assets/icons/downvote.svg"
             }
-            alt="downvote"
             width={18}
             height={18}
+            alt="downvote"
             className="cursor-pointer"
             onClick={() => handleVote("downvote")}
           />
@@ -145,9 +155,9 @@ const Votes = ({
               ? "/assets/icons/star-filled.svg"
               : "/assets/icons/star-red.svg"
           }
-          alt="save"
           width={18}
           height={18}
+          alt="star"
           className="cursor-pointer"
           onClick={handleSave}
         />
