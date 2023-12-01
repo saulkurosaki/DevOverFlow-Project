@@ -1,8 +1,8 @@
 "use server";
 
 import Question from "@/database/question.model";
-import { connectToDatabase } from "../mongoose";
 import Tag from "@/database/tag.model";
+import { connectToDatabase } from "../mongoose";
 import {
   CreateQuestionParams,
   GetQuestionByIdParams,
@@ -12,7 +12,7 @@ import {
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
 
-export const getQuestions = async (params: GetQuestionsParams) => {
+export async function getQuestions(params: GetQuestionsParams) {
   try {
     connectToDatabase();
 
@@ -26,32 +26,9 @@ export const getQuestions = async (params: GetQuestionsParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const getQuestionById = async (params: GetQuestionByIdParams) => {
-  try {
-    connectToDatabase();
-
-    const { questionId } = params;
-
-    const question = await Question.findById(questionId)
-      .populate({ path: "tags", model: Tag, select: "_id name" })
-      .populate({
-        path: "author",
-        model: User,
-        select: "_id clerkId name picture",
-      });
-
-    if (!question) throw new Error("Question not found");
-
-    return { question };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
-export const createQuestion = async (params: CreateQuestionParams) => {
+export async function createQuestion(params: CreateQuestionParams) {
   try {
     connectToDatabase();
 
@@ -70,27 +47,47 @@ export const createQuestion = async (params: CreateQuestionParams) => {
     for (const tag of tags) {
       const existingTag = await Tag.findOneAndUpdate(
         { name: { $regex: new RegExp(`^${tag}$`, "i") } },
-        { $setOnInsert: { name: tag }, $push: { question: question._id } },
+        { $setOnInsert: { name: tag }, $push: { questions: question._id } },
         { upsert: true, new: true }
       );
 
       tagDocuments.push(existingTag._id);
     }
 
-    // Update the question with the tags
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagDocuments } },
     });
 
     // Create an interaction record for the user's ask_question action
 
-    // Increment authors reputation by +5 points form creating a question
+    // Increment author's reputation by +5 for creating a question
 
     revalidatePath(path);
   } catch (error) {}
-};
+}
 
-export const upvoteQuestion = async (params: QuestionVoteParams) => {
+export async function getQuestionById(params: GetQuestionByIdParams) {
+  try {
+    connectToDatabase();
+
+    const { questionId } = params;
+
+    const question = await Question.findById(questionId)
+      .populate({ path: "tags", model: Tag, select: "_id name" })
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id clerkId name picture",
+      });
+
+    return question;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
+
+export async function upvoteQuestion(params: QuestionVoteParams) {
   try {
     connectToDatabase();
 
@@ -117,16 +114,16 @@ export const upvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error("Question not found");
     }
 
-    // Increment authors reputation
+    // Increment author's reputation
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const downvoteQuestion = async (params: QuestionVoteParams) => {
+export async function downvoteQuestion(params: QuestionVoteParams) {
   try {
     connectToDatabase();
 
@@ -135,7 +132,7 @@ export const downvoteQuestion = async (params: QuestionVoteParams) => {
     let updateQuery = {};
 
     if (hasdownVoted) {
-      updateQuery = { $pull: { downvotes: userId } };
+      updateQuery = { $pull: { downvote: userId } };
     } else if (hasupVoted) {
       updateQuery = {
         $pull: { upvotes: userId },
@@ -153,11 +150,11 @@ export const downvoteQuestion = async (params: QuestionVoteParams) => {
       throw new Error("Question not found");
     }
 
-    // Increment authors reputation
+    // Increment author's reputation
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
