@@ -10,7 +10,7 @@ import {
 import Question from "@/database/question.model";
 import { revalidatePath } from "next/cache";
 
-export const createAnswer = async (params: CreateAnswerParams) => {
+export async function createAnswer(params: CreateAnswerParams) {
   try {
     connectToDatabase();
 
@@ -23,16 +23,16 @@ export const createAnswer = async (params: CreateAnswerParams) => {
       $push: { answers: newAnswer._id },
     });
 
-    // TODO: Add interaction
+    // TODO: Add interaction...
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const getAnswers = async (params: GetAnswersParams) => {
+export async function getAnswers(params: GetAnswersParams) {
   try {
     connectToDatabase();
 
@@ -47,9 +47,9 @@ export const getAnswers = async (params: GetAnswersParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const upvoteAnswer = async (params: AnswerVoteParams) => {
+export async function upvoteAnswer(params: AnswerVoteParams) {
   try {
     connectToDatabase();
 
@@ -76,16 +76,16 @@ export const upvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error("Answer not found");
     }
 
-    // Increment authors reputation
+    // Increment author's reputation
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const downvoteAnswer = async (params: AnswerVoteParams) => {
+export async function downvoteAnswer(params: AnswerVoteParams) {
   try {
     connectToDatabase();
 
@@ -94,7 +94,7 @@ export const downvoteAnswer = async (params: AnswerVoteParams) => {
     let updateQuery = {};
 
     if (hasdownVoted) {
-      updateQuery = { $pull: { downvotes: userId } };
+      updateQuery = { $pull: { downvote: userId } };
     } else if (hasupVoted) {
       updateQuery = {
         $pull: { upvotes: userId },
@@ -112,11 +112,11 @@ export const downvoteAnswer = async (params: AnswerVoteParams) => {
       throw new Error("Answer not found");
     }
 
-    // Increment authors reputation
+    // Increment author's reputation
 
     revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
   }
-};
+}
