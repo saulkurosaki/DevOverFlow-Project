@@ -7,30 +7,37 @@ export function cn(...inputs: ClassValue[]) {
 
 export const getTimestamp = (createdAt: Date): string => {
   const now = new Date();
-  const diffInMilliseconds = now.getTime() - createdAt.getTime();
+  const timeDifference = now.getTime() - createdAt.getTime();
 
-  const seconds = Math.floor(diffInMilliseconds / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-  const weeks = Math.floor(days / 7);
-  const months = Math.floor(days / 30);
-  const years = Math.floor(days / 365);
+  // Define time intervals in milliseconds
+  const minute = 60 * 1000;
+  const hour = 60 * minute;
+  const day = 24 * hour;
+  const week = 7 * day;
+  const month = 30 * day;
+  const year = 365 * day;
 
-  if (years > 0) {
-    return `${years} ${years === 1 ? "year" : "years"} ago`;
-  } else if (months > 0) {
-    return `${months} ${months === 1 ? "month" : "months"} ago`;
-  } else if (weeks > 0) {
-    return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
-  } else if (days > 0) {
-    return `${days} ${days === 1 ? "day" : "days"} ago`;
-  } else if (hours > 0) {
-    return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
-  } else if (minutes > 0) {
-    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
-  } else {
+  if (timeDifference < minute) {
+    const seconds = Math.floor(timeDifference / 1000);
     return `${seconds} ${seconds === 1 ? "second" : "seconds"} ago`;
+  } else if (timeDifference < hour) {
+    const minutes = Math.floor(timeDifference / minute);
+    return `${minutes} ${minutes === 1 ? "minute" : "minutes"} ago`;
+  } else if (timeDifference < day) {
+    const hours = Math.floor(timeDifference / hour);
+    return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+  } else if (timeDifference < week) {
+    const days = Math.floor(timeDifference / day);
+    return `${days} ${days === 1 ? "day" : "days"} ago`;
+  } else if (timeDifference < month) {
+    const weeks = Math.floor(timeDifference / week);
+    return `${weeks} ${weeks === 1 ? "week" : "weeks"} ago`;
+  } else if (timeDifference < year) {
+    const months = Math.floor(timeDifference / month);
+    return `${months} ${months === 1 ? "month" : "months"} ago`;
+  } else {
+    const years = Math.floor(timeDifference / year);
+    return `${years} ${years === 1 ? "year" : "years"} ago`;
   }
 };
 

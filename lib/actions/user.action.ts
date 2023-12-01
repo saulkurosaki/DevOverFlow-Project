@@ -1,5 +1,6 @@
 "use server";
 
+import { FilterQuery } from "mongoose";
 import User from "@/database/user.model";
 import { connectToDatabase } from "../mongoose";
 import {
@@ -13,9 +14,8 @@ import {
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
-import { FilterQuery } from "mongoose";
 
-export const getUserById = async (params: any) => {
+export async function getUserById(params: any) {
   try {
     connectToDatabase();
 
@@ -28,9 +28,9 @@ export const getUserById = async (params: any) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const createUser = async (userData: CreateUserParams) => {
+export async function createUser(userData: CreateUserParams) {
   try {
     connectToDatabase();
 
@@ -41,9 +41,9 @@ export const createUser = async (userData: CreateUserParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const updateUser = async (params: UpdateUserParams) => {
+export async function updateUser(params: UpdateUserParams) {
   try {
     connectToDatabase();
 
@@ -58,9 +58,9 @@ export const updateUser = async (params: UpdateUserParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const deleteUser = async (params: DeleteUserParams) => {
+export async function deleteUser(params: DeleteUserParams) {
   try {
     connectToDatabase();
 
@@ -68,21 +68,21 @@ export const deleteUser = async (params: DeleteUserParams) => {
 
     const user = await User.findOneAndDelete({ clerkId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      throw new Error("User not found");
+    }
 
     // Delete user from database
     // and questions, answers, comments, etc.
 
-    // get user questions
-
-    // const userQuestionIds = await Question.find({ author: user._id }).distinct(
-    //   "_id"
-    // );
+    // get user question ids
+    // const userQuestionIds = await Question.find({ author: user._id}).distinct('_id');
 
     // delete user questions
     await Question.deleteMany({ author: user._id });
 
     // TODO: delete user answers, comments, etc.
+
     const deletedUser = await User.findByIdAndDelete(user._id);
 
     return deletedUser;
@@ -90,9 +90,9 @@ export const deleteUser = async (params: DeleteUserParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const getAllUsers = async (params: GetAllUsersParams) => {
+export async function getAllUsers(params: GetAllUsersParams) {
   try {
     connectToDatabase();
 
@@ -105,9 +105,9 @@ export const getAllUsers = async (params: GetAllUsersParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
+export async function toggleSaveQuestion(params: ToggleSaveQuestionParams) {
   try {
     connectToDatabase();
 
@@ -122,14 +122,14 @@ export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
     const isQuestionSaved = user.saved.includes(questionId);
 
     if (isQuestionSaved) {
-      // Remove the question from the "saved" array
+      // remove question from saved
       await User.findByIdAndUpdate(
         userId,
         { $pull: { saved: questionId } },
         { new: true }
       );
     } else {
-      // Add a question to the "saved" array
+      // add question to saved
       await User.findByIdAndUpdate(
         userId,
         { $addToSet: { saved: questionId } },
@@ -142,9 +142,9 @@ export const toggleSaveQuestion = async (params: ToggleSaveQuestionParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-export const getSavedQuestions = async (params: GetSavedQuestionsParams) => {
+export async function getSavedQuestions(params: GetSavedQuestionsParams) {
   try {
     connectToDatabase();
 
@@ -177,14 +177,13 @@ export const getSavedQuestions = async (params: GetSavedQuestionsParams) => {
     console.log(error);
     throw error;
   }
-};
+}
 
-// export const getAllUsers = async (params: GetAllUsersParams) => {
+// export async function getAllUsers(params: GetAllUsersParams) {
 //   try {
 //     connectToDatabase();
-
 //   } catch (error) {
 //     console.log(error);
 //     throw error;
 //   }
-// };
+// }
