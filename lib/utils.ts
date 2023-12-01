@@ -55,11 +55,12 @@ export const formatAndDivideNumber = (num: number): string => {
 
 export const getJoinedDate = (date: Date): string => {
   // Get month and year from the Date object
-  const month = date.toLocaleString("default", { month: "long" });
+  const month = date.toLocaleString("en-US", { month: "long" });
+  const capitalizedMonth = month.charAt(0).toUpperCase() + month.slice(1); // Capitalize the first letter
   const year = date.getFullYear();
 
-  // Concatenate month and year
-  const joinedDate = `${month} ${year}`;
+  // Concatenate capitalized month and year
+  const joinedDate = `${capitalizedMonth} ${year}`;
 
   return joinedDate;
 };
