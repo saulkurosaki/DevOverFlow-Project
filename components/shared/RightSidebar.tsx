@@ -3,31 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 
 import RenderTag from "./RenderTag";
+import { getHotQuestions } from "@/lib/actions/question.action";
 
-const RightSidebar = () => {
-  const topQuestions = [
-    {
-      _id: 1,
-      title: "Is it only me or the font is bolder than necessary?",
-    },
-    {
-      _id: 2,
-      title:
-        "Best practices for data fetching in a Next.js application with Server-Side Rendering (SSR)?",
-    },
-    {
-      _id: 3,
-      title: "Can I get the course for free?",
-    },
-    {
-      _id: 4,
-      title: "Redux Toolkit Not Updating State as Expected",
-    },
-    {
-      _id: 5,
-      title: "Async/Await Function Not Handling Errors Properly",
-    },
-  ];
+const RightSidebar = async () => {
+  const topQuestions = await getHotQuestions();
 
   const popularTags = [
     {
@@ -64,7 +43,7 @@ const RightSidebar = () => {
         <div className="mt-7 flex w-full flex-col gap-[30px]">
           {topQuestions.map((question) => (
             <Link
-              href={`/questions/${question._id}`}
+              href={`/question/${question._id}`}
               key={question._id}
               className="flex cursor-pointer items-center justify-between gap-7"
             >
