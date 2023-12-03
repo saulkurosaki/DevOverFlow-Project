@@ -47,7 +47,7 @@ const Profile = async ({ params, searchParams }: URLProps) => {
 
               {userInfo.user.location && (
                 <ProfileLink
-                  imgUrl="/assets/icons/locations.svg"
+                  imgUrl="/assets/icons/location.svg"
                   title={userInfo.user.location}
                 />
               )}
