@@ -102,6 +102,7 @@ export interface GetQuestionsByTagIdParams {
   page?: number;
   pageSize?: number;
   searchQuery?: string;
+  filter?: string;
 }
 
 export interface GetTopInteractedTagsParams {
