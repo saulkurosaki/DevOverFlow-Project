@@ -8,7 +8,6 @@ import { formUrlQuery } from "@/lib/utils";
 
 const HomeFilters = () => {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const [active, setActive] = useState("");
 
