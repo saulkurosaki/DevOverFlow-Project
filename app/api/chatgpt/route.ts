@@ -26,8 +26,6 @@ export const POST = async (request: Request) => {
       }),
     });
 
-    console.log({ response });
-
     const responseData = await response.json();
     const reply = responseData.choices[0].message.content;
 

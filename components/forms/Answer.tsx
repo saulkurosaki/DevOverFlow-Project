@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useRef, useState } from "react";
 import {
   Form,
   FormControl,
@@ -9,10 +8,11 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { AnswerSchema } from "@/lib/validations";
+import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
+import { useRef, useState } from "react";
 import { useTheme } from "@/context/ThemeProvider";
 import { Button } from "../ui/button";
 import Image from "next/image";
@@ -28,10 +28,9 @@ interface Props {
 const Answer = ({ question, questionId, authorId }: Props) => {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmittingAi, setIsSubmittingAi] = useState(false);
+  const [isSubmittingAI, setIsSubmittingAI] = useState(false);
   const { mode } = useTheme();
   const editorRef = useRef(null);
-
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
     defaultValues: {
@@ -64,10 +63,10 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     }
   };
 
-  const generateAiAnswer = async () => {
+  const generateAIAnswer = async () => {
     if (!authorId) return;
 
-    setIsSubmittingAi(true);
+    setIsSubmittingAI(true);
 
     try {
       const response = await fetch(
@@ -80,12 +79,20 @@ const Answer = ({ question, questionId, authorId }: Props) => {
 
       const aiAnswer = await response.json();
 
-      alert(aiAnswer.reply);
+      // Convert plain text to HTML format
+
+      const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent(formattedAnswer);
+      }
+
+      // Toast...
     } catch (error) {
       console.log(error);
-      throw error;
     } finally {
-      setIsSubmittingAi(false);
+      setIsSubmittingAI(false);
     }
   };
 
@@ -97,17 +104,23 @@ const Answer = ({ question, questionId, authorId }: Props) => {
         </h4>
 
         <Button
-          onClick={generateAiAnswer}
           className="btn light-border-2 gap-1.5 rounded-md px-4 py-2.5 text-primary-500 shadow-none dark:text-primary-500"
+          onClick={generateAIAnswer}
         >
-          <Image
-            src="/assets/icons/stars.svg"
-            alt="star"
-            width={12}
-            height={12}
-            className="object-contain"
-          />
-          Generate AI Answer
+          {isSubmittingAI ? (
+            <>Generating...</>
+          ) : (
+            <>
+              <Image
+                src="/assets/icons/stars.svg"
+                alt="star"
+                width={12}
+                height={12}
+                className="object-contain"
+              />
+              Generate AI Answer
+            </>
+          )}
         </Button>
       </div>
 
@@ -152,7 +165,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                       ],
                       toolbar:
                         "undo redo | " +
-                        "codesample | bold italic forecolor | alignleft aligncenter | " +
+                        "codesample | bold italic forecolor | alignleft aligncenter |" +
                         "alignright alignjustify | bullist numlist",
                       content_style:
                         "body { font-family:Inter; font-size:16px }",
