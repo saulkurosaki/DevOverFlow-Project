@@ -22,6 +22,7 @@ import { Badge } from "../ui/badge";
 import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 import { useRouter, usePathname } from "next/navigation";
 import { useTheme } from "@/context/ThemeProvider";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   mongoUserId: string;
@@ -73,9 +74,16 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
           author: JSON.parse(mongoUserId),
           path: pathname,
         });
-        // navigate to home page
-        router.push("/");
+
+        router.push(`/?filter=newest`);
       }
+
+      toast({
+        title: `Question ${type === "Edit" ? "Edited" : "Posted"}`,
+        description: `Your question has been successfully ${
+          type === "Edit" ? "edited" : "posted"
+        }`,
+      });
     } catch (error) {
     } finally {
       setIsSubmitting(false);
