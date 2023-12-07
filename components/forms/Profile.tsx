@@ -20,6 +20,7 @@ import { useState } from "react";
 import { ProfileSchema } from "@/lib/validations";
 import { usePathname, useRouter } from "next/navigation";
 import { updateUser } from "@/lib/actions/user.action";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   clerkId: string;
@@ -62,6 +63,11 @@ const Profile = ({ clerkId, user }: Props) => {
       });
 
       router.back();
+
+      toast({
+        title: "Profile Updated",
+        description: "Your profile information has been successfully updated",
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -181,8 +187,6 @@ const Profile = ({ clerkId, user }: Props) => {
             {isSubmitting ? "Saving..." : "Save"}
           </Button>
         </div>
-
-        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );
