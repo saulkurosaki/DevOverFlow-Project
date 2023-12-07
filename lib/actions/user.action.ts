@@ -372,7 +372,7 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     const totalAnswers = await Answer.countDocuments({ author: userId });
 
     const userAnswers = await Answer.find({ author: userId })
-      .sort({ upvotes: -1 })
+      .sort({ createdAt: -1 })
       .skip(skipAmount)
       .limit(pageSize)
       .populate("question", "_id title")
