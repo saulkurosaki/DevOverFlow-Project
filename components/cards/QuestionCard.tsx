@@ -11,7 +11,7 @@ interface Props {
   _id: number;
   title: string;
   tags: { _id: number; name: string }[];
-  author: { _id: number; name: string; picture: string };
+  author: { _id: number; name: string; picture: string; clerkId: string };
   upvotes: string[];
   views: number;
   answers: Array<object>;
