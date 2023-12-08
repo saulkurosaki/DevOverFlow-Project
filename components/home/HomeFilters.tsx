@@ -1,9 +1,9 @@
 "use client";
 
 import { HomePageFilters } from "@/constants/filters";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { formUrlQuery } from "@/lib/utils";
 
 const HomeFilters = () => {
