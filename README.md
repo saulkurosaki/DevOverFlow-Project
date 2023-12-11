@@ -1,37 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 # DevOverFlow-Project
+
+![Alt text](<1-DevFlow - Google Chrome 10_12_2023 11_20_14 p. m..png>)
+![Alt text](<2-DevFlow - Google Chrome 10_12_2023 11_23_45 p. m..png>)
+![Alt text](<3-DevFlow - Google Chrome 10_12_2023 11_21_08 p. m..png>)
+![Alt text](<4-DevFlow - Google Chrome 10_12_2023 11_22_29 p. m..png>)
+![Alt text](<5-DevFlow - Google Chrome 10_12_2023 11_22_15 p. m..png>)
+![Alt text](<6-DevFlow - Google Chrome 10_12_2023 11_22_23 p. m..png>)
+![Alt text](<7-DevFlow - Google Chrome 10_12_2023 11_22_47 p. m..png>)
+![Alt text](<8-DevFlow - Google Chrome 10_12_2023 11_22_56 p. m..png>)
+![Alt text](<9-DevFlow - Google Chrome 10_12_2023 11_23_31 p. m..png>)
+![Alt text](<10-DevFlow - Google Chrome 10_12_2023 11_23_37 p. m..png>)
+![Alt text](<11-DevFlow - Google Chrome 10_12_2023 11_23_56 p. m..png>)
+![Alt text](<12-DevFlow - Google Chrome 10_12_2023 11_24_06 p. m..png>)
+![Alt text](<13-DevFlow - Google Chrome 10_12_2023 11_24_14 p. m..png>)
+![Alt text](<14-DevFlow - Google Chrome 10_12_2023 11_24_24 p. m..png>)
+![Alt text](<15-DevFlow - Google Chrome 10_12_2023 11_24_28 p. m..png>)
+![Alt text](<16-DevFlow - Google Chrome 10_12_2023 11_24_34 p. m..png>)
+![Alt text](<17-DevFlow - Google Chrome 10_12_2023 11_24_56 p. m..png>)
+![Alt text](<18-DevFlow - Google Chrome 10_12_2023 11_25_01 p. m..png>)
+![Alt text](<19-DevFlow - Google Chrome 10_12_2023 11_25_09 p. m..png>)
+![Alt text](<20-DevFlow - Google Chrome 10_12_2023 11_25_13 p. m..png>)
+![Alt text](<21-DevFlow - Google Chrome 10_12_2023 11_26_28 p. m..png>)
+![Alt text](<22-DevFlow - Google Chrome 10_12_2023 11_26_37 p. m..png>)
+![Alt text](<23-DevFlow - Google Chrome 10_12_2023 11_27_07 p. m..png>)
+![Alt text](<24-DevFlow - Google Chrome 10_12_2023 11_27_27 p. m..png>)
+![Alt text](<25-DevFlow - Google Chrome 10_12_2023 11_12_55 p. m..png>)
