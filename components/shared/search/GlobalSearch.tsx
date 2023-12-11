@@ -80,7 +80,7 @@ const GlobalSearch = () => {
 
         <Input
           type="text"
-          placeholder="Search globally"
+          placeholder="Search anything globally..."
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
