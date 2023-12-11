@@ -39,3 +39,11 @@ export const GlobalSearchFilters = [
   { name: "User", value: "user" },
   { name: "Tag", value: "tag" },
 ];
+
+export const JobFilters = [
+  { name: "Mexico", value: "mexico" },
+  { name: "USA", value: "usa" },
+  { name: "Canada", value: "canada" },
+  { name: "New Zealand", value: "new_zealand" },
+  { name: "Switzerland", value: "switzerland" },
+];
